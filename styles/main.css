@@ -1,0 +1,752 @@
+/* 1. Colors and settings---*/
+
+:root{
+    --cream: #FFF8EF;
+    --ink: #3B2A2F;
+    --ink-soft: #6B5A5F;
+    --rose: #F4B6C2;        /* light pink, backgrounds only */
+    --rose-deep: #B0334F;   /* dark pink, for text and buttons */
+    --butter: #FBE7A1;      /* soft yellow */
+    --white: #FFFFFF;
+    --line: #E9D9CC;        /* thin borders around cards */
+    --edge: #8A7479;        /* borders of inputs (dark enough to see clearly) */
+    --error: #9B1C31;
+    --warning: #7A5200;
+
+    --radius: 14px;
+    --font-body: "DM Sans", Arial, sans-serif;
+    --font-hand: "Caveat", cursive;
+
+}
+
+/*---2. RESET---*/
+
+*,
+*::before,
+*::after{
+    box-sizing: border-box; 
+}
+body{
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: 1rem;
+    line-height: 1.5;
+    color: var(--ink);
+    background: var(--cream);
+    padding-bottom: 76px; 
+}
+
+/*The hidden attribute*/
+[hidden] {
+    display: none !important;
+}
+
+h1, h2, h3 {
+    line-height: 1.2;
+    margin: 0 0 0.6rem;
+}
+
+h2 {
+    font-size: 1.7rem;
+}
+
+h3 {
+    font-size: 1.1rem;
+}
+
+p{
+    margin: 0 0 0.8rem;
+}
+a{
+    color: var(--rose-deep);
+}
+
+/*3. Accessibility Helpers*/
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+main:focus-visible{
+    outline: 3px solid var(--ink);
+    outline-offset: 2px;
+}
+
+/*Hidden on screen but still read by screen readers*/
+.visually-hidden{
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/*Skip link: sits above the screen until someone tabs to it*/
+ .skip-link {
+    position: absolute;
+    top: -60px;
+    left: 8px;
+    padding: 10px 16px;
+    background: var(--ink);
+    color: var(--white);
+    border-radius: 0 0 8px 8px;
+    z-index: 100;
+ }
+
+ .skip-link:focus {
+    top: 0;
+ }
+
+ /*4. Header and Navigation (mobile)*/
+
+ .site-header{
+    background: var(--butter);
+    padding: 10px 16px;
+    border-bottom: 2px solid var(--rose);
+ }
+
+ /*The wordmark uses the handwriting font*/
+
+ .brand {
+    margin: 0;
+    font-family: var(--font-hand);
+    font-size: 2rem;
+    font-weight: 600;
+ }
+
+ .brand span{
+    color: var(--rose-deep);
+ }
+
+ /*On phones the menu is a bar stuck to the bottom of the screen*/
+ .site-header nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--butter);
+    border-top: 2px solid var(--rose);
+    z-index: 50;
+ } 
+
+ .nav-list {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+ }
+
+ .nav-list li {
+    flex: 1;
+ }
+
+ .nav-list a {
+    display: block;
+    min-height: 56px;
+    padding: 18px 2px 0;
+    text-align: center;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--ink);
+    text-decoration: none;
+ }
+
+ /*The page you are on (javaScript will add aria-current="page") */
+ .nav-list a[aria-current="page"] {
+    background: var(--rose-deep);
+    color: var(--white);
+ }
+
+ .nav-list a:hover {
+    background: var(--rose);
+ }
+ .nav-list a[aria-current="page"]:hover {
+    background: var(--rose-deep);
+ }
+
+ /*--5.Main area and Page animation--*/
+ main{
+    padding: 20px 16px;
+    max-width: 960px;
+ }
+
+ /*Each section fades up a little when it appears*/
+.page:not([hidden]) {
+    animation: fade-up 0.35s ease;
+}
+@keyframes fade-up {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+}
+
+/*--6. Dashboard--*/
+
+/*Big handwritten hello (JavaScript fills the text) */
+.greeting {
+    font-family: var(--font-hand);
+    font-size: 2.2rem;
+    font-weight: 600;
+    line-height: 1.1;
+    color: var(--rose-deep);
+    background: var(--rose);
+    padding: 16px 20px;
+    border-radius: var(--radius);
+    color: var(--ink);
+}
+.greeting:empty {
+    display: none; /* removes the pink box when there is no text*/
+}
+
+/*Stat cards: as many as fit per row, each at least 140px wide*/
+.stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 12px;
+    margin: 16px 0;
+}
+
+.stat-card {
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 14px 16px;
+}
+
+.stat-label {
+    margin: 0;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--ink-soft);
+}
+
+.stat-number {
+  margin: 4px 0 0;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--rose-deep);
+}
+
+/* The weekly cap box looks like a little sticky note*/
+.cap-box {
+    background: var(--butter);
+    border-radius: var(--radius);
+    padding: 16px 18px;
+    margin-bottom: 16px;
+    box-shadow: 3px 4px 0 rgba(59, 42, 47, 0.12);
+}
+
+.cap-bar {
+    height: 14px;
+    background: var(--white);
+    border: 2px solid var(--ink);
+    border-radius: 99px;
+    overflow: hidden;
+    margin: 8px 0 10px;
+}
+
+/*The colored part of the bar. JavaScript sets its width.*/
+.cap-fill {
+    height: 100%;
+    width: 0;
+    background: var(--rose-deep);
+    transition: width 0.6s ease;
+}
+
+/* JavaScript adds this class when I go over the cap */
+.cap-fill.over {
+    background: var(--error);
+}
+
+#cap-polite,
+#cap-alert {
+    margin: 0;
+    font-weight: 700;
+}
+
+#cap-alert {
+    color: var(--error);
+}
+
+/*Last 7 days chart: a row of bars lined up at the bottom*/
+.trend {
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 16px 18px;
+}
+
+.trend-chart {
+    display: flex;
+    align-items: flex-end; /*bars grow upward from the bottom*/
+    gap: 8px;
+    height: 170px;
+}
+
+/*One column per day (JavaScript will make these)*/
+.bar-col {
+    flex: 1;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    font-size: 0.75rem;
+    color: var(--ink-soft);
+}
+
+.bar {
+    width: 100%;
+    min-height: 3px;
+    background: var(--rose-deep);
+    border-radius: 6px 6px 0 0;
+    transition: height 0.5s ease;
+}
+
+/*--7. Forms--*/
+.field {
+    margin-bottom: 16px;
+}
+
+label,
+legend {
+    display: block;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+input[type="text"],
+select {
+    width: 100%;
+    min-height:  46px; /*allows it to be big enough to tap on a phone*/
+    padding: 8px 12px;
+    font: inherit;
+    color: var(--ink);
+    background: var(--white);
+    border: 2px solid var(--edge);
+    border-radius: 10px;
+}
+
+/* JavaScript add .invakid to a field when the regex check fails*/
+input.invalid {
+    border-color: var(--error);
+    background: #FFF1F3;
+}
+
+/*Checkbox and radio rows: input and label side by side*/
+.field-check,
+.radio-row{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.field-check label,
+.radio-row label {
+    margin: 0;
+    font-weight: 500;
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+     width: 20px;
+    height: 20px;
+    accent-color: var(--rose-deep);
+}
+   
+fieldset {
+    border: 2px solid var(--line);
+    border-radius: 10px;
+}
+.hint{
+    margin: 4px 0 0;
+    font-size: 0.875rem;
+    color: var(--ink-soft);
+}
+
+.error {
+    margin: 4px 0 0;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--error);
+}
+
+.warning {
+    margin: 4px 0 0;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--warning);
+}
+
+button {
+    min-height: 46px;
+    padding: 8px 20px;
+    font: inherit;
+    font-weight: 700;
+    color: var(--white);
+    background: var(--rose-deep);
+    border: 2px solid var(--rose-deep);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 0.15s ease, background 0.15s ease;
+}
+
+button:hover {
+    transform: translateY(-2px);
+
+}
+
+/*Cancel, keep it and similar buttons look less loud */
+#cancel-btn,
+.dialog-buttons button[value="cancel"] {
+    color: var(--rose-deep);
+    background: var(--white);
+}
+
+button.danger {
+    background: var(--error);
+    border-color: var(--error);
+}
+
+.form-buttons,
+.dialog-buttons {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.toolbar {
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 16px;
+    margin-bottom: 12px;
+}
+
+#search-message,
+#form-status,
+#settings-status,
+#import-status {
+    font-weight: 700;
+    min-height: 1.5em;
+}
+
+
+/*---8.Records: Cards on Mobile--
+    tables are turned into stacked cards on phones
+    Each cell shows its colum name using data-label*/
+
+.records-table,
+.records-table tbody,
+.records-table tr,
+.records-table td {
+    display: block;
+}
+
+/* The header row is hidden on phones because each card has its own labels*/
+.records-table thead {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+}
+
+.records-table tr {
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-left: 6px solid var(--line);
+    border-radius: var(--radius);
+    padding: 12px 16px;
+    margin-bottom: 12px;
+    animation: fade-up 0.3s ease;
+}
+.records-table td {
+    padding: 3px 0;
+}
+.records-table td::before{
+    content: attr(data-label) ": ";
+    font-weight: 700;
+    color: var(--ink-soft);
+}
+
+/*The title acts as the card heading, so it doesn't need a label*/
+
+.records-table td[data-label="Title"] {
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+.records-table td[data-label="Title"]::before,
+.records-table td[data-label="Actions"]::before {
+    content: none;
+
+}
+
+.records-table td[data-label="Actions"] {
+    display: flex;
+    gap: 8px;
+    padding-top: 8px;
+}
+
+/*Smaller buttons inside the rows*/
+.records-table td button {
+    min-height: 40px;
+    padding: 4px 14px;
+}
+
+/*Highlighted search matches*/
+mark {
+    background: #FFD84D;
+    color: var(--ink);
+    padding: 0 2px;
+    border-radius: 3px;
+}
+
+.empty-state {
+    background: var(--butter);
+    border-radius: var(--radius);
+    padding: 20px;
+    text-align: center;
+    font-weight: 500;
+}
+
+/*---9. Settings---*/
+
+.tag-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    list-style: none;
+    padding: 0;
+    margin: 0 0 16px;
+}
+
+/*Each tag looks like a small pill (JavaScript makes these)*/
+.tag-list li {
+    background: var(--butter);
+    border-radius: 99px;
+    padding: 4px 6px 4px 14px;
+    font-weight: 500;
+}
+
+.tag-list li button {
+    min-height: 32px;
+    padding: 0 10px;
+    margin-left: 4px;
+    color: var(--ink);
+    background: transparent;
+    border: 0;
+}
+
+.settings-block {
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 16px;
+    margin-top: 20px;
+}
+
+/*---10. Delete Popup---*/
+dialog {
+    width: min(92vw, 380px);
+    padding: 22px;
+    color: var(--ink);
+    background: var(--cream);
+    border: 3px solid var(--ink);
+    border-radius: var(--radius);
+}
+
+/*The dark see-through layer behind the popup*/
+dialog::backdrop {
+    background: rgba(59, 42, 47, 0.55);
+}
+
+/*---11. Footer---*/
+.site-footer {
+    padding: 16px;
+    text-align: center;
+    font-size: 0.875rem;
+    color: var(--ink-soft);
+}
+
+/*---12. Tablet (768px and wider)---
+The menu moves to the top and the cards turn back into a real table*/
+@media (min-width: 768px) {
+
+    body {
+        padding-bottom: 0; /*no bottom menu anymore*/
+    }
+.site-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 32px;
+}
+
+
+.site-header nav {
+    position: static; /*back to normal flow, no longer stuck to the bottom*/
+    background: transparent;
+    border: 0;
+}
+
+.nav-list a {
+    min-height: 0;
+    padding: 10px 16px;
+    font-size: 0.95rem;
+    border-radius: 99px;
+}
+
+main {
+    padding: 32px;
+    margin: 0 auto;
+}
+
+.stats {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.toolbar {
+    display: flex;
+    align-items: flex-end;
+    gap: 20px;
+}
+
+.toolbar .field {
+    margin-bottom: 0;
+}
+
+.toolbar .field:first-child {
+    flex: 1;
+}
+
+/*Bring the real table back*/
+.records-table {
+    display: table;
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--white);
+    border-radius: var(--radius);
+    overflow: hidden;
+}
+
+.records-table thead {
+    display: table-header-group;
+    position: static;
+    width: auto;
+    height: auto;
+    overflow: visible;
+    clip: auto;
+}
+
+.records-table tbody {
+    display: table-row-group;
+}
+
+.records-table tr {
+    display: table-row;
+    border: 0;
+    border-radius: 0;
+    padding: 0;
+    margin: 0;
+}
+
+.records-table th,
+.records-table td {
+    display: table-cell;
+    padding: 12px 14px;
+    text-align: left;
+    border-bottom: 1px solid var(--line);
+}
+
+.records-table th {
+    background: var(--butter);
+}
+
+/*Labels in front of each cell are no longer needed*/
+.records-table td::before {
+    content: none !important;
+}
+
+.records-table td[data-label="Title"] {
+    font-size: 1rem;
+}
+
+.records-table td[data-label="Actions"] {
+    display: table-cell;
+    white-space: nowrap;
+}
+
+.records-table td button {
+    margin-right: 6px;
+}
+
+#task-form,
+#settings-form {
+    max-width: 520px; }
+}
+
+
+/*---13. Desktop(1024px and wider)---
+The header becomes a sidebar on the left*/
+@media (min-width: 1024px) {
+    .site-header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: 240px;
+        display: block; /*stop being a row, stack things vertically*/
+        padding: 28px 20px;
+        border-bottom: 0;
+        border-right: 2px solid var(--rose);
+    }
+    .brand {
+        font-size: 2.4rem;
+        margin-bottom: 28px;
+    }
+    .site-header nav {
+        display: block;
+    }
+    .nav-list {
+        flex-direction: column;
+        gap: 6px;
+    }
+
+    .nav-list a {
+        text-align: left;
+        padding: 12px 16px;
+        border-radius: 12px;
+    }
+
+    /*Push the content to the right so the sidebar doesn't cover it*/
+    main {
+        margin: 0 0 0 240px;
+        padding: 40px;
+        max-width: none;
+    }
+    main > .page {
+        max-width: 900px;
+    }
+    .site-footer {
+        margin-left: 240px;
+        text-align: left;
+        padding-left: 40px;
+    }
+}
+
+/*---14. Reduced Motion----
+Allows people turn off animations on their device settings.*/
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation: none !important;
+        transition: none !important;
+    }
+}
+

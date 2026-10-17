@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campus Living</title>
+    <meta name="description" content="A planner for tasks, events and study time, built with plain HTML, CSS and JavaScript.">
+    <!--fonts: Caveat for the wordmark,and Dm Sans for the rest-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="styles/main.css">
+
+</head>
+<body>
+    <!--first thing a keyboard user reaches when they press tab-->
+    <a class="skip-link" href="#main">Skip to main content</a>
+    
+    <!--HEADER: wordmark + navigation(becomes the sidebar on desktop)-->
+    <header class="site-header">
+        <h1 class="brand">Campus <span>Living</span></h1>
+
+        <nav aria-label="Main">
+            <ul class="nav-list">
+                <li><a href="#dashboard">Dashboard</a></li>
+                <li><a href="#records">My tasks</a></li>
+                <li><a href="#form">Add task</a></li>
+                <li><a href="#settings">Settings</a></li>
+                <li><a href="#about">About</a></li>
+            </ul>
+        </nav>
+    </header>
+
+<!--MAIN: five sections, Js shows one at a time-->
+<main id="main" tabindex="-1">
+    <!--1. DASHBOARD-->
+    <section id="dashboard" class="page" aria-labelledby="dashboard-title">
+        <h2 id="dashboard-title">Dashboard</h2>
+        <p id="greeting" class="greeting"></p>
+
+        <div class="stats">
+            <div class="stat-card">
+                <h3 class="stat-label">Total tasks</h3>
+                <p class="stat-number" id="stat-total">0</p>
+            </div>
+            <div class="stat-card">
+                <h3 class="stat-label">Planned time</h3>
+                <p class="stat-number" id="stat-duration">0</p>
+            </div>
+            <div class="stat-card">
+                <h3 class="stat-label">Top tag</h3>
+                <p class="stat-number" id="stat-tag">None yet</p>
+            </div>
+        </div>
+        <div class="cap-box">
+            <h3>Weekly time cap</h3>
+            <div class="cap-bar" aria-hidden="true">
+                <div id="cap-fill" class="cap-fill"></div>
+            </div>
+             <!-- two live regions: polite when under the cap, assertive when over -->
+            <p id="cap-polite" role="status" aria-live="polite"></p>
+            <p id="cap-alert" role="alert" aria-live="assertive"></p>
+        </div>
+        <div class="trend">
+            <h3>Last 7 days</h3>
+            <div id="trend-chart" class="trend-chart" role="img"
+                aria-label="Planned time for each of the last 7 days"></div>
+        </div>
+    </section>
+
+    <!--2. RECORDS(table on desktop, cards on mobile)-->
+    <section id="records" class="page" aria-labelledby="records-title" hidden>
+         <h2 id="records-title">My tasks</h2>
+
+      <form id="search-form" class="toolbar" role="search" novalidate>
+        <div class="field">
+          <label for="search-input">Search (regex allowed)</label>
+          <input type="text" id="search-input" autocomplete="off" spellcheck="false"
+                 placeholder="try: ^lab   or   @tag:exam">
+        </div>
+
+        <div class="field field-check">
+          <input type="checkbox" id="search-case" checked>
+          <label for="search-case">Ignore upper/lower case</label>
+        </div>
+
+        <div class="field">
+          <label for="sort-select">Sort by</label>
+          <select id="sort-select">
+            <option value="date-asc">Due date, soonest first</option>
+            <option value="date-desc">Due date, latest first</option>
+            <option value="title-asc">Title A to Z</option>
+            <option value="title-desc">Title Z to A</option>
+            <option value="duration-asc">Duration, shortest first</option>
+            <option value="duration-desc">Duration, longest first</option>
+          </select>
+        </div>
+      </form>
+
+      <p id="search-message" role="status"></p>
+
+      <table id="records-table" class="records-table">
+        <caption class="visually-hidden">Your tasks and events</caption>
+        <thead>
+          <tr>
+            <th scope="col">Title</th>
+            <th scope="col">Due date</th>
+            <th scope="col">Duration</th>
+            <th scope="col">Tag</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody id="records-body"></tbody>
+      </table>
+
+      <p id="empty-state" class="empty-state" hidden>
+        Nothing here yet. Add your first task and it will show up in this list.
+      </p> 
+    </section>
+
+    <!--3. Add/Edit Form-->
+    <section id="form" class="page" aria-labelledby="form-title" hidden>
+      <h2 id="form-title">Add a task</h2>
+
+      <form id="task-form" novalidate>
+        <!-- empty when adding, filled with the record id when editing -->
+        <input type="hidden" id="task-id">
+
+        <div class="field">
+          <label for="task-title">Title</label>
+          <input type="text" id="task-title" required
+                 aria-describedby="title-hint title-error title-warning">
+          <p class="hint" id="title-hint">No spaces at the start or end.</p>
+          <p class="error" id="title-error" aria-live="polite"></p>
+          <p class="warning" id="title-warning" aria-live="polite"></p>
+        </div>
+
+        <div class="field">
+          <label for="task-date">Due date (YYYY-MM-DD)</label>
+          <input type="text" id="task-date" required inputmode="numeric"
+                 maxlength="10" placeholder="2026-10-20"
+                 aria-describedby="date-error">
+          <p class="error" id="date-error" aria-live="polite"></p>
+        </div>
+
+        <div class="field">
+          <label for="task-duration">Duration (<span id="duration-unit">minutes</span>)</label>
+          <input type="text" id="task-duration" required inputmode="decimal"
+                 aria-describedby="duration-error">
+          <p class="error" id="duration-error" aria-live="polite"></p>
+        </div>
+
+        <div class="field">
+          <label for="task-tag">Tag</label>
+          <input type="text" id="task-tag" required list="tag-options"
+                 aria-describedby="tag-error">
+          <datalist id="tag-options"></datalist>
+          <p class="error" id="tag-error" aria-live="polite"></p>
+        </div>
+
+        <div class="form-buttons">
+          <button type="submit" id="save-btn">Save task</button>
+          <button type="button" id="cancel-btn">Cancel</button>
+        </div>
+
+        <p id="form-status" role="status"></p>
+      </form>
+    </section>
+     <!-- 4. SETTINGS -->
+    <section id="settings" class="page" aria-labelledby="settings-title" hidden>
+      <h2 id="settings-title">Settings</h2>
+
+      <form id="settings-form" novalidate>
+        <h3>Preferences</h3>
+
+        <div class="field">
+          <label for="setting-name">Your name (used in the greeting)</label>
+          <input type="text" id="setting-name" autocomplete="given-name">
+        </div>
+
+        <fieldset class="field">
+          <legend>Show durations in</legend>
+          <div class="radio-row">
+            <input type="radio" id="unit-minutes" name="unit" value="minutes" checked>
+            <label for="unit-minutes">Minutes</label>
+            <input type="radio" id="unit-hours" name="unit" value="hours">
+            <label for="unit-hours">Hours</label>
+          </div>
+        </fieldset>
+
+        <div class="field">
+          <label for="setting-cap">Weekly cap (hours)</label>
+          <input type="text" id="setting-cap" inputmode="decimal" aria-describedby="cap-error">
+          <p class="error" id="cap-error" aria-live="polite"></p>
+        </div>
+
+        <button type="submit">Save settings</button>
+        <p id="settings-status" role="status"></p>
+      </form>
+
+      <div class="settings-block">
+        <h3>Tags</h3>
+        <ul id="tag-list" class="tag-list"></ul>
+        <div class="field">
+          <label for="new-tag">Add a tag</label>
+          <input type="text" id="new-tag" aria-describedby="new-tag-error">
+          <p class="error" id="new-tag-error" aria-live="polite"></p>
+        </div>
+        <button type="button" id="add-tag-btn">Add tag</button>
+      </div>
+
+      <div class="settings-block">
+        <h3>Your data</h3>
+        <button type="button" id="export-btn">Export to JSON</button>
+
+        <div class="field">
+          <label for="import-file">Import from JSON</label>
+          <input type="file" id="import-file" accept=".json,application/json">
+        </div>
+        <p id="import-status" role="status"></p>
+      </div>
+    </section>
+
+    <!--5. About-->
+    <section id="about" class="page" aria-labelledby="about-title" hidden>
+        <h2 id="about-title">About</h2>
+        <p>I built the Campus Living to help students stay organized and balance their academic responsibilities with their personal lives. It helps University students have a simple easy-to-use way to track assignments, plan events, manage their time, and keep up with their goals. </p>
+        <p>Add your tasks and events, set their dates and durations, and track your progress as you stay on top of campus life.</p>
+
+        <h3>Contact</h3>
+        <ul>
+            <li>GitHub: <a href="https://github.com/gidoko-codes">gidoko-codes</a></li>
+            <li>Email: <a href="mailto:g.idoko@alustudent.com">g.idoko@alustudent.com</a></li>
+        </ul>
+    </section>
+
+    <!--Hidden message area for screen readers
+        JavaScript will put things like "Task deleted" here-->
+    <p id="app-status" class="visually-hidden" role="status"></p>
+</main>
+
+<!--native delete confirmation (the browser handles focus for us)-->
+<dialog id="confirm-dialog" aria-labelledby="confirm-title">
+    <form method="dialog">
+      <h2 id="confirm-title">Delete this task?</h2>
+      <p id="confirm-text"></p>
+      <div class="dialog-buttons">
+        <button value="cancel">Keep it</button>
+        <button value="delete" class="danger">Delete</button>
+      </div>
+    </form>
+</dialog>
+
+<footer class="site-footer">
+    <p>Built with HTML, CSS and JavaScript. No frameworks</p>
+</footer>
+
+<script type="module" src="scripts/main.js"></script>
+</body>
+</html>
