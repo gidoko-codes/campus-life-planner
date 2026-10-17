@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Campus Livin tests</title>
+</head>
+<body>
+    <h1>Validator tests</h1>
+    <ul id="results"></ul>
+
+    <script type="module">
+        import { checkTitle, checkDate, checkDuration, checkTag, checkDuplicateWord } from "./scripts/validators.js";
+
+        const results = document.getElementById("results");
+
+        //test(name, actual, expected)
+        //expected is "ok" if the message should be empty, or "error" if it should not be empty
+        function test(name, message, expected) {
+            const gotOk = message === "";
+            const passed = (expected === "ok") === gotOk;
+            const li = document.createElement("li");
+            li.textContent = (passed ? "PASS: " : "FAIL: ") + name;
+            results.appendChild(li);
+        }
+
+        test("title with normal text", checkTitle("Study for exam"), "ok");
+        test("title with leading space", checkTitle(" Study"), "error");
+        test("title with trailing space", checkTitle("Study "), "error");
+        test("empty title", checkTitle(""), "error");
+
+        test("valid date", checkDate("2026-10-20"), "ok");
+        test("leap day 2028", checkDate("2028-02-29"), "ok");
+        test("fake leap day 2026", checkDate("2026-02-29"), "error")
+        test("february 30", checkDate("2026-02-30"), "error");
+        test("wrong format", checkDate("20-10-2026"), "error");
+
+        test("duration 90", checkDuration("90"), "ok");
+        test("duration 1.5", checkDuration("1.5"), "ok");
+        test("duration with 0", checkDuration("0"), "error");
+        test("duration with 3 decimals", checkDuration("1.555"), "error");
+        test("duration leading zero", checkDuration("007"), "error");
+        
+        test("tag Study", checkTag("Study"), "ok");
+        test("tag with hyphen", checkTag("Part-time"), "ok");
+        test("tag with number", checkTag("Math101"), "error");
+
+        test("duplicate word found", checkDuplicateWord("study study hard"), "error");
+        test("no duplicate", checkDuplicateWord("study hard"), "ok");
+    </script>   
+</body>
+</html>
