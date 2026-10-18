@@ -1,0 +1,110 @@
+[
+  {
+    "id": "rec_0001",
+    "title": "Study for calculus exam",
+    "dueDate": "2026-10-18",
+    "duration": 120,
+    "tag": "Exam",
+    "createdAt": "2026-10-11T08:00:00.000Z",
+    "updatedAt": "2026-10-11T08:00:00.000Z"
+  },
+  {
+    "id": "rec_0002",
+    "title": "Lab at 14:30",
+    "dueDate": "2026-10-17",
+    "duration": 90,
+    "tag": "Study",
+    "createdAt": "2026-10-11T08:05:00.000Z",
+    "updatedAt": "2026-10-11T08:05:00.000Z"
+  },
+  {
+    "id": "rec_0003",
+    "title": "Club meeting",
+    "dueDate": "2026-10-16",
+    "duration": 60,
+    "tag": "Club",
+    "createdAt": "2026-10-11T08:10:00.000Z",
+    "updatedAt": "2026-10-11T08:10:00.000Z"
+  },
+  {
+    "id": "rec_0004",
+    "title": "Read the the introduction",
+    "dueDate": "2026-10-15",
+    "duration": 45,
+    "tag": "Assignment",
+    "createdAt": "2026-10-11T08:15:00.000Z",
+    "updatedAt": "2026-10-11T08:15:00.000Z"
+  },
+  {
+    "id": "rec_0005",
+    "title": "Quick email to advisor",
+    "dueDate": "2026-10-18",
+    "duration": 5,
+    "tag": "Other",
+    "createdAt": "2026-10-11T08:20:00.000Z",
+    "updatedAt": "2026-10-11T08:20:00.000Z"
+  },
+  {
+    "id": "rec_0006",
+    "title": "Group project marathon",
+    "dueDate": "2026-10-14",
+    "duration": 720,
+    "tag": "Assignment",
+    "createdAt": "2026-10-11T08:25:00.000Z",
+    "updatedAt": "2026-10-11T08:25:00.000Z"
+  },
+  {
+    "id": "rec_0007",
+    "title": "Review C++ notes (chapter 3)",
+    "dueDate": "2026-10-13",
+    "duration": 30,
+    "tag": "Study",
+    "createdAt": "2026-10-11T08:30:00.000Z",
+    "updatedAt": "2026-10-11T08:30:00.000Z"
+  },
+  {
+    "id": "rec_0008",
+    "title": "Movie night",
+    "dueDate": "2026-10-12",
+    "duration": 150,
+    "tag": "Social",
+    "createdAt": "2026-10-11T08:35:00.000Z",
+    "updatedAt": "2026-10-11T08:35:00.000Z"
+  },
+  {
+    "id": "rec_0009",
+    "title": "Leap day workshop",
+    "dueDate": "2028-02-29",
+    "duration": 60,
+    "tag": "Club",
+    "createdAt": "2026-10-11T08:40:00.000Z",
+    "updatedAt": "2026-10-11T08:40:00.000Z"
+  },
+  {
+    "id": "rec_0010",
+    "title": "Final exam revision",
+    "dueDate": "2026-12-05",
+    "duration": 180,
+    "tag": "Exam",
+    "createdAt": "2026-10-11T08:45:00.000Z",
+    "updatedAt": "2026-10-11T08:45:00.000Z"
+  },
+  {
+    "id": "rec_0011",
+    "title": "Physics quiz at 09:15",
+    "dueDate": "2026-10-19",
+    "duration": 40,
+    "tag": "Exam",
+    "createdAt": "2026-10-11T08:50:00.000Z",
+    "updatedAt": "2026-10-11T08:50:00.000Z"
+  },
+  {
+    "id": "rec_0012",
+    "title": "Part-time job shift",
+    "dueDate": "2026-10-17",
+    "duration": 240,
+    "tag": "Part-time",
+    "createdAt": "2026-10-11T08:55:00.000Z",
+    "updatedAt": "2026-10-11T08:55:00.000Z"
+  }
+]
