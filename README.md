@@ -6,7 +6,7 @@ It is built with plain HTML, CSS and JavaScript. There are no frameworks and no 
 
 - **Theme chosen:** Campus Life Planner (tasks and events, durations, tags, search)
 - **Live site (GitHub Pages):** https://gidoko-codes.github.io/campus-life-planner/
-- **Demo video (unlisted):** ADD-YOUR-VIDEO-LINK-HERE
+- **Demo video (unlisted):** https://drive.google.com/file/d/1u8116w3eoF_IDY74Zb-t2tUBPGcVRGrh/view?usp=sharing
 - **Author:** gidoko-codes, g.idoko@alustudent.com
 
 ---
