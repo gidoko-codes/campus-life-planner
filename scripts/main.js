@@ -42,6 +42,13 @@ function refresh() {
 // ---------- navigation ----------
 function goToPage() {
   let name = window.location.hash.replace("#", "");
+
+  //the skip  link uses #main, so just move focus and stay on this page
+  if(name === "main") {
+    byId("main").focus();
+    return;
+  }
+  
   const allowed = ["dashboard", "records", "form", "settings", "about"];
   if (!allowed.includes(name)) {
     name = "dashboard";
